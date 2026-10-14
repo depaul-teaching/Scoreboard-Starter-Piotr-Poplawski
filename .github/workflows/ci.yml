@@ -11,9 +11,17 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scoreboard-api/requirements*.txt
 
-      - name: Look around the runner
-        run: |
-          echo "Hello from a fresh runner!"
-          ls scoreboard-api
-          python3 --version
+      - name: Install dependencies
+        run: | 
+          pip install -r      requirements-dev.txt
+
+      - name: Run tests
+        run: | 
+          pytest -v
